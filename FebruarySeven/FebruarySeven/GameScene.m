@@ -10,6 +10,7 @@
 
 #define kZGSpaceshipName @"spaceship"
 #define kZGObstacleName @"obstacle"
+#define kZGBorderName @"kZGBorderName"
 
 typedef NS_OPTIONS(uint32_t, kZGCategoryBitmask) {
     kZGCategoryBitmaskSpaceship = 1 << 1,
@@ -23,12 +24,15 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
     kZGTouchLocationRight
 };
 
+const CGFloat kZGMaxSpeed = 5;
+
 @interface GameScene () <SKPhysicsContactDelegate>
 
-@property (assign) ZGTouchLocation touchLocation;
 @property (assign) CFTimeInterval lastObstacleTime;
 @property (assign) int points;
 @property (assign) BOOL ended;
+@property (nonatomic, assign) CGFloat obstacleSpeed;
+@property (strong) NSSet *touches;
 
 -(void)createSpaceship;
 -(void)addObstacle;
@@ -40,10 +44,11 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
 
 -(void)didMoveToView:(SKView *)view {
     
-    self.touchLocation = kZGTouchLocationNone;
     self.lastObstacleTime = -1;
+    self.obstacleSpeed = 1.0;
     [self createSpaceship];
     [self createBorder];
+    
     
     self.physicsWorld.contactDelegate = self;
 }
@@ -52,20 +57,15 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
     /* Called when a touch begins */
     [super touchesBegan:touches withEvent:event];
     
-    for (UITouch *touch in touches) {
-        CGPoint location = [touch locationInNode:self];
-        
-        if (location.x < CGRectGetMidX(self.frame)) {
-            self.touchLocation = kZGTouchLocationLeft;
-        } else if (location.x >= CGRectGetMidX(self.frame)) {
-            self.touchLocation = kZGTouchLocationRight;
-        }
-    }
+    self.touches = [touches setByAddingObjectsFromSet:self.touches];
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    self.touchLocation = kZGTouchLocationNone;
+    [super touchesEnded:touches withEvent:event];
+    NSMutableSet *newTouches = [NSMutableSet setWithSet:self.touches];
+    [newTouches minusSet:touches];
+    self.touches = [newTouches copy];
 }
 
 -(void)update:(CFTimeInterval)currentTime {
@@ -73,7 +73,19 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
     SKNode *ship = [self childNodeWithName:kZGSpaceshipName];
     CGPoint position = ship.position;
     
-    switch (_touchLocation) {
+    ZGTouchLocation touchLocation = kZGTouchLocationNone;
+    for (UITouch *touch in self.touches) {
+        CGPoint location = [touch locationInNode:self];
+        
+        if (location.x < CGRectGetMidX(self.frame)) {
+            touchLocation = kZGTouchLocationLeft;
+            break;
+        } else if (location.x >= CGRectGetMidX(self.frame)) {
+            touchLocation = kZGTouchLocationRight;
+            break;
+        }
+    }
+    switch (touchLocation) {
         case kZGTouchLocationLeft:
         {
             ship.position = CGPointMake(position.x - 5, position.y);
@@ -91,9 +103,10 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
     if (_lastObstacleTime < 0) {
         _lastObstacleTime = currentTime;
         [self addObstacle];
-    } else if ((currentTime - _lastObstacleTime) >= 1.5) {
+    } else if ((currentTime - _lastObstacleTime) >= (1.5 - _obstacleSpeed/5)) {
         _lastObstacleTime = currentTime;
         [self addObstacle];
+        self.obstacleSpeed += 0.1;
     }
 }
 
@@ -130,6 +143,8 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
     
     obstacle.xScale = 0.2;
     obstacle.yScale = 0.2;
+    obstacle.speed = self.obstacleSpeed;
+    obstacle.zRotation = M_PI;
     
     obstacle.name = kZGObstacleName;
     
@@ -157,6 +172,7 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
 
 -(void)createBorder {
     SKNode *border = [SKNode node];
+    border.name = kZGBorderName;
     border.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
     border.physicsBody.categoryBitMask = kZGCategoryBitmaskEdge;
     border.physicsBody.collisionBitMask = kZGCategoryBitmaskSpaceship;
@@ -171,6 +187,20 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
     if (self.gameDelegate && [self.gameDelegate respondsToSelector:@selector(didEndGameFromScene:withPoints:)]) {
         [self.gameDelegate didEndGameFromScene:self withPoints:self.points];
     }
+}
+
+-(void)setObstacleSpeed:(CGFloat)speed
+{
+    if (speed > kZGMaxSpeed) {
+        speed = kZGMaxSpeed;
+    }
+    if (speed == _obstacleSpeed) {
+        return;
+    }
+    [self enumerateChildNodesWithName:kZGObstacleName usingBlock:^(SKNode *node, BOOL *stop) {
+        node.speed = speed;
+    }];
+    _obstacleSpeed = speed;
 }
 
 #pragma mark - SKPhysicsContactDelegate
