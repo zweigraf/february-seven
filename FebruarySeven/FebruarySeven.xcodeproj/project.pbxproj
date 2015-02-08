@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A572A4F51A86E9D200EEBF54 /* ZGTitleScene.m in Sources */ = {isa = PBXBuildFile; fileRef = A572A4F41A86E9D200EEBF54 /* ZGTitleScene.m */; };
 		A5D018351A86737500E800E6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D018341A86737500E800E6 /* main.m */; };
 		A5D018381A86737500E800E6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D018371A86737500E800E6 /* AppDelegate.m */; };
 		A5D0183B1A86737500E800E6 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D0183A1A86737500E800E6 /* GameScene.m */; };
-		A5D0183D1A86737500E800E6 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = A5D0183C1A86737500E800E6 /* GameScene.sks */; };
 		A5D018401A86737500E800E6 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D0183F1A86737500E800E6 /* GameViewController.m */; };
 		A5D018431A86737500E800E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5D018411A86737500E800E6 /* Main.storyboard */; };
 		A5D018451A86737500E800E6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5D018441A86737500E800E6 /* Images.xcassets */; };
@@ -29,6 +29,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A572A4F31A86E9D200EEBF54 /* ZGTitleScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGTitleScene.h; sourceTree = "<group>"; };
+		A572A4F41A86E9D200EEBF54 /* ZGTitleScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGTitleScene.m; sourceTree = "<group>"; };
 		A5D0182F1A86737500E800E6 /* FebruarySeven.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FebruarySeven.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5D018331A86737500E800E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5D018341A86737500E800E6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -36,7 +38,6 @@
 		A5D018371A86737500E800E6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		A5D018391A86737500E800E6 /* GameScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
 		A5D0183A1A86737500E800E6 /* GameScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
-		A5D0183C1A86737500E800E6 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		A5D0183E1A86737500E800E6 /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		A5D0183F1A86737500E800E6 /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		A5D018421A86737500E800E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -90,7 +91,8 @@
 				A5D018371A86737500E800E6 /* AppDelegate.m */,
 				A5D018391A86737500E800E6 /* GameScene.h */,
 				A5D0183A1A86737500E800E6 /* GameScene.m */,
-				A5D0183C1A86737500E800E6 /* GameScene.sks */,
+				A572A4F31A86E9D200EEBF54 /* ZGTitleScene.h */,
+				A572A4F41A86E9D200EEBF54 /* ZGTitleScene.m */,
 				A5D0183E1A86737500E800E6 /* GameViewController.h */,
 				A5D0183F1A86737500E800E6 /* GameViewController.m */,
 				A5D018411A86737500E800E6 /* Main.storyboard */,
@@ -209,7 +211,6 @@
 			files = (
 				A5D018481A86737500E800E6 /* LaunchScreen.xib in Resources */,
 				A5D018451A86737500E800E6 /* Images.xcassets in Resources */,
-				A5D0183D1A86737500E800E6 /* GameScene.sks in Resources */,
 				A5D018431A86737500E800E6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -230,6 +231,7 @@
 			files = (
 				A5D018401A86737500E800E6 /* GameViewController.m in Sources */,
 				A5D018381A86737500E800E6 /* AppDelegate.m in Sources */,
+				A572A4F51A86E9D200EEBF54 /* ZGTitleScene.m in Sources */,
 				A5D0183B1A86737500E800E6 /* GameScene.m in Sources */,
 				A5D018351A86737500E800E6 /* main.m in Sources */,
 			);
@@ -424,6 +426,7 @@
 				A5D018591A86737500E800E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A5D0185A1A86737500E800E6 /* Build configuration list for PBXNativeTarget "FebruarySevenTests" */ = {
 			isa = XCConfigurationList;
@@ -432,6 +435,7 @@
 				A5D0185C1A86737500E800E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
