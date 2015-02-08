@@ -7,10 +7,12 @@
 //
 
 #import "GameScene.h"
+#import <AVFoundation/AVFoundation.h>
 
 #define kZGSpaceshipName @"spaceship"
 #define kZGObstacleName @"obstacle"
 #define kZGBorderName @"kZGBorderName"
+#define kZGMusicKey @"kZGMusicKey"
 
 typedef NS_OPTIONS(uint32_t, kZGCategoryBitmask) {
     kZGCategoryBitmaskSpaceship = 1 << 1,
@@ -39,6 +41,9 @@ const CGFloat kZGObstacleRadius = 40.0;
 -(void)addObstacle;
 -(void)createBorder;
 -(void)endGame;
+
+@property (strong, nonatomic) AVAudioPlayer *audioPlayer;
+
 @end
 
 @implementation GameScene
@@ -50,13 +55,25 @@ const CGFloat kZGObstacleRadius = 40.0;
     [self createSpaceship];
     [self createBorder];
     
-    SKAction *crash = [SKAction playSoundFileNamed:@"crash.wav" waitForCompletion:NO];
+    SKAction *crash = [SKAction playSoundFileNamed:@"crash.m4a" waitForCompletion:NO];
+//    [self runAction:crash];
+    SKAction *move = [SKAction playSoundFileNamed:@"move_short.m4a" waitForCompletion:NO];
+//    [self
+//     runAction:move];
+//    SKAction *music = [SKAction repeatActionForever:[SKAction playSoundFileNamed:@"music.wav" waitForCompletion:YES]];
+//    [self runAction:music withKey:kZGMusicKey];
+
+    NSURL *url = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/music.m4a", [[NSBundle mainBundle] resourcePath]]];
     
-    SKAction *move = [SKAction playSoundFileNamed:@"move.wav" waitForCompletion:NO];
+    NSError *error;
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+    self.audioPlayer.numberOfLoops = -1;
     
-    SKAction *music = [SKAction repeatActionForever:[SKAction playSoundFileNamed:@"music.wav" waitForCompletion:YES]];
-    [self runAction:music];
-    
+    if (!self.audioPlayer) {}
+//        NSLog([error localizedDescription]);
+    else {
+        [self.audioPlayer play];
+    }
     
     self.physicsWorld.contactDelegate = self;
 }
@@ -110,7 +127,7 @@ const CGFloat kZGObstacleRadius = 40.0;
     
     if (touchLocation != kZGTouchLocationNone) {
         
-        SKAction *move = [SKAction playSoundFileNamed:@"move.wav" waitForCompletion:NO];
+        SKAction *move = [SKAction playSoundFileNamed:@"move_short.m4a" waitForCompletion:NO];
         [self runAction:move];
     }
     
@@ -212,11 +229,17 @@ const CGFloat kZGObstacleRadius = 40.0;
 -(void)endGame
 {
     self.ended = YES;
+    self.speed = 0;
     
-    SKAction *crash = [SKAction playSoundFileNamed:@"crash.wav" waitForCompletion:NO];
+    SKAction *crash = [SKAction playSoundFileNamed:@"crash.m4a" waitForCompletion:YES];
     [self runAction:crash];
+
+    [self.audioPlayer stop];
     if (self.gameDelegate && [self.gameDelegate respondsToSelector:@selector(didEndGameFromScene:withPoints:)]) {
-        [self.gameDelegate didEndGameFromScene:self withPoints:self.points];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.gameDelegate didEndGameFromScene:self withPoints:self.points];
+        });
+        
     }
 }
 
