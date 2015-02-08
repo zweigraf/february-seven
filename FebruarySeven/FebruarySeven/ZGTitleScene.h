@@ -16,6 +16,6 @@
 
 @interface ZGTitleScene : SKScene
 
-@property (weak) NSObject<ZGTitleSceneDelegate> *titleDelegate;
+@property (weak) id<ZGTitleSceneDelegate> titleDelegate;
 
 @end

@@ -9,6 +9,7 @@
 #import "GameViewController.h"
 #import "GameScene.h"
 #import "ZGTitleScene.h"
+#import "ZGGameOverScene.h"
 
 @implementation SKScene (Unarchive)
 
@@ -29,7 +30,7 @@
 
 @end
 
-@interface GameViewController () <ZGTitleSceneDelegate>
+@interface GameViewController () <ZGTitleSceneDelegate, GameSceneDelegate>
 @end
 
 @implementation GameViewController
@@ -82,8 +83,20 @@
     
     GameScene *gameScene = [GameScene sceneWithSize:self.view.bounds.size];
     gameScene.scaleMode = SKSceneScaleModeAspectFill;
+    gameScene.gameDelegate = self;
     
     [skView presentScene:gameScene];
+}
+
+#pragma mark - GameSceneDelegate
+
+-(void)didEndGameFromScene:(SKScene *)scene withPoints:(int)points
+{
+    ZGGameOverScene *gameScene = [ZGGameOverScene sceneWithSize:self.view.bounds.size];
+    gameScene.points = points;
+    SKView *view = (SKView *)self.view;
+    
+    [view presentScene:gameScene];
 }
 
 @end

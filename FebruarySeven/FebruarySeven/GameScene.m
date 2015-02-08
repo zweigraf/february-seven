@@ -27,6 +27,8 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
 @property (assign) ZGTouchLocation touchLocation;
 @property (assign) CFTimeInterval lastObstacleTime;
 
+@property (assign) int points;
+@property (assign) BOOL ended;
 @end
 
 @implementation GameScene
@@ -133,19 +135,26 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
     obstacle.physicsBody.categoryBitMask = kZGCategoryBitmaskObstacle;
     
     
-//    SKAction *fly = [SKAction moveByX:0 y:-(self.frame.size.height * 2) duration:5];
-//    
-//    SKAction *seq = [SKAction sequence:@[fly, [SKAction removeFromParent]]];
-//    
-//    [obstacle runAction:seq];
     
     [self addChild:obstacle];
+}
+
+
+-(void)endGame
+{
+    self.ended = YES;
+    if (self.gameDelegate && [self.gameDelegate respondsToSelector:@selector(didEndGameFromScene:withPoints:)]) {
+        [self.gameDelegate didEndGameFromScene:self withPoints:self.points];
+    }
 }
 
 #pragma mark - SKPhysicsContactDelegate
 
 
 - (void)didBeginContact:(SKPhysicsContact *)contact {
+    if (self.ended) {
+        return;
+    }
     if (contact.bodyA.categoryBitMask & kZGCategoryBitmaskSpaceship) {
         [contact.bodyB.node removeFromParent];
 //        [[self childNodeWithName:kZGSpaceshipName] removeFromParent];
@@ -153,6 +162,7 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
         [contact.bodyA.node removeFromParent];
 //        [[self childNodeWithName:kZGSpaceshipName] removeFromParent];
     }
+    [self endGame];
     
 }
 

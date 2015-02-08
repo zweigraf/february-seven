@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A572A4F51A86E9D200EEBF54 /* ZGTitleScene.m in Sources */ = {isa = PBXBuildFile; fileRef = A572A4F41A86E9D200EEBF54 /* ZGTitleScene.m */; };
+		A572A4F81A86F28B00EEBF54 /* ZGGameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = A572A4F71A86F28B00EEBF54 /* ZGGameOverScene.m */; };
 		A5D018351A86737500E800E6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D018341A86737500E800E6 /* main.m */; };
 		A5D018381A86737500E800E6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D018371A86737500E800E6 /* AppDelegate.m */; };
 		A5D0183B1A86737500E800E6 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D0183A1A86737500E800E6 /* GameScene.m */; };
@@ -31,6 +32,8 @@
 /* Begin PBXFileReference section */
 		A572A4F31A86E9D200EEBF54 /* ZGTitleScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGTitleScene.h; sourceTree = "<group>"; };
 		A572A4F41A86E9D200EEBF54 /* ZGTitleScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGTitleScene.m; sourceTree = "<group>"; };
+		A572A4F61A86F28B00EEBF54 /* ZGGameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGGameOverScene.h; sourceTree = "<group>"; };
+		A572A4F71A86F28B00EEBF54 /* ZGGameOverScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGGameOverScene.m; sourceTree = "<group>"; };
 		A5D0182F1A86737500E800E6 /* FebruarySeven.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FebruarySeven.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5D018331A86737500E800E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5D018341A86737500E800E6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -91,6 +94,8 @@
 				A5D018371A86737500E800E6 /* AppDelegate.m */,
 				A5D018391A86737500E800E6 /* GameScene.h */,
 				A5D0183A1A86737500E800E6 /* GameScene.m */,
+				A572A4F61A86F28B00EEBF54 /* ZGGameOverScene.h */,
+				A572A4F71A86F28B00EEBF54 /* ZGGameOverScene.m */,
 				A572A4F31A86E9D200EEBF54 /* ZGTitleScene.h */,
 				A572A4F41A86E9D200EEBF54 /* ZGTitleScene.m */,
 				A5D0183E1A86737500E800E6 /* GameViewController.h */,
@@ -232,6 +237,7 @@
 				A5D018401A86737500E800E6 /* GameViewController.m in Sources */,
 				A5D018381A86737500E800E6 /* AppDelegate.m in Sources */,
 				A572A4F51A86E9D200EEBF54 /* ZGTitleScene.m in Sources */,
+				A572A4F81A86F28B00EEBF54 /* ZGGameOverScene.m in Sources */,
 				A5D0183B1A86737500E800E6 /* GameScene.m in Sources */,
 				A5D018351A86737500E800E6 /* main.m in Sources */,
 			);
