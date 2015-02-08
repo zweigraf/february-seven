@@ -148,7 +148,7 @@ const CGFloat kZGMaxSpeed = 5;
     
     obstacle.name = kZGObstacleName;
     
-    CGFloat x = arc4random_uniform(self.frame.size.width);
+    CGFloat x = arc4random_uniform(self.frame.size.width - obstacle.size.width) + obstacle.size.width / 2;
     CGPoint position = CGPointMake(x, CGRectGetMaxY(self.frame) + obstacle.size.height);
     obstacle.position = position;
     
