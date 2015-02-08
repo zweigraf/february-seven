@@ -157,7 +157,7 @@ const CGFloat kZGObstacleRadius = 40.0;
     CGPoint position = CGPointMake(x, CGRectGetMaxY(self.frame) + obstacle.size.height);
     obstacle.position = position;
     
-    obstacle.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:obstacle.size];
+    obstacle.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:(obstacle.size.width / 2) - 3];
     obstacle.physicsBody.categoryBitMask = kZGCategoryBitmaskObstacle;
     obstacle.physicsBody.collisionBitMask = 0x0;
     obstacle.physicsBody.affectedByGravity = NO;
