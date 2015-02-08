@@ -125,12 +125,22 @@ const CGFloat kZGObstacleRadius = 40.0;
     
     sprite.name = kZGSpaceshipName;
     
-    sprite.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:sprite.size];
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint:CGPointMake(0, 25)];
+    [path addLineToPoint:CGPointMake(-28, -25)];
+    [path addLineToPoint:CGPointMake(28, -25)];
+    [path closePath];
+    
+    
+    sprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path.CGPath];
+
+//    sprite.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:sprite.size];
     sprite.physicsBody.dynamic = YES;
     sprite.physicsBody.affectedByGravity = NO;
     sprite.physicsBody.collisionBitMask = kZGCategoryBitmaskEdge;
     sprite.physicsBody.contactTestBitMask = kZGCategoryBitmaskObstacle;
     sprite.physicsBody.categoryBitMask = kZGCategoryBitmaskSpaceship;
+    sprite.physicsBody.allowsRotation = NO;
     
     [self addChild:sprite];
     
