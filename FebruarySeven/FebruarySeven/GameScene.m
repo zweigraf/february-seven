@@ -13,7 +13,8 @@
 
 typedef NS_OPTIONS(uint32_t, kZGCategoryBitmask) {
     kZGCategoryBitmaskSpaceship = 1 << 1,
-    kZGCategoryBitmaskObstacle = 1 << 2
+    kZGCategoryBitmaskObstacle = 1 << 2,
+    kZGCategoryBitmaskEdge = 1 << 3
 };
 
 typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
@@ -38,6 +39,7 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
     self.touchLocation = kZGTouchLocationNone;
     self.lastObstacleTime = -1;
     [self createSpaceship];
+    [self createBorder];
     
     self.physicsWorld.contactDelegate = self;
 }
@@ -64,7 +66,6 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
-    NSLog(@"currenttime %f", currentTime);
     SKNode *ship = [self childNodeWithName:kZGSpaceshipName];
     CGPoint position = ship.position;
     
@@ -86,7 +87,7 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
     if (_lastObstacleTime < 0) {
         _lastObstacleTime = currentTime;
         [self addObstacle];
-    } else if ((currentTime - _lastObstacleTime) >= 1) {
+    } else if ((currentTime - _lastObstacleTime) >= 1.5) {
         _lastObstacleTime = currentTime;
         [self addObstacle];
     }
@@ -107,8 +108,9 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
     sprite.name = kZGSpaceshipName;
     
     sprite.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:sprite.size];
-    sprite.physicsBody.dynamic = NO;
-    sprite.physicsBody.collisionBitMask = kZGCategoryBitmaskObstacle;
+    sprite.physicsBody.dynamic = YES;
+    sprite.physicsBody.affectedByGravity = NO;
+    sprite.physicsBody.collisionBitMask = kZGCategoryBitmaskEdge;
     sprite.physicsBody.contactTestBitMask = kZGCategoryBitmaskObstacle;
     sprite.physicsBody.categoryBitMask = kZGCategoryBitmaskSpaceship;
     
@@ -133,10 +135,29 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
     
     obstacle.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:obstacle.size];
     obstacle.physicsBody.categoryBitMask = kZGCategoryBitmaskObstacle;
+    obstacle.physicsBody.collisionBitMask = 0x0;
+    obstacle.physicsBody.affectedByGravity = NO;
     
-    
+    CGPoint destination = CGPointMake(x, -1 * obstacle.size.height);
+    SKAction *fly = [SKAction moveTo:destination duration:5];
+
+    SKAction *seq = [SKAction sequence:@[fly, [SKAction runBlock:^{
+        self.points += 10;
+    }], [SKAction removeFromParent]]];
+
+    [obstacle runAction:seq];
+
     
     [self addChild:obstacle];
+}
+
+-(void)createBorder {
+    SKNode *border = [SKNode node];
+    border.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
+    border.physicsBody.categoryBitMask = kZGCategoryBitmaskEdge;
+    border.physicsBody.collisionBitMask = kZGCategoryBitmaskSpaceship;
+    
+    [self addChild:border];
 }
 
 
