@@ -10,6 +10,12 @@
 
 const CGFloat kZGGameOverLabelDifference = 50.0;
 
+@interface ZGGameOverScene ()
+
+-(void)startGame;
+
+@end
+
 @implementation ZGGameOverScene
 
 -(void)didMoveToView:(SKView *)view {
@@ -25,6 +31,18 @@ const CGFloat kZGGameOverLabelDifference = 50.0;
     
     [self addChild:node];
     [self addChild:pointNode];
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self startGame];
+}
+
+-(void)startGame
+{
+    if (self.gameDelegate && [self.gameDelegate respondsToSelector:@selector(didStartGameFromScene:)]) {
+        [self.gameDelegate didStartGameFromScene:self];
+    }
 }
 
 @end

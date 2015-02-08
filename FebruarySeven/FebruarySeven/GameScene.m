@@ -27,9 +27,13 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
 
 @property (assign) ZGTouchLocation touchLocation;
 @property (assign) CFTimeInterval lastObstacleTime;
-
 @property (assign) int points;
 @property (assign) BOOL ended;
+
+-(void)createSpaceship;
+-(void)addObstacle;
+-(void)createBorder;
+-(void)endGame;
 @end
 
 @implementation GameScene

@@ -30,7 +30,7 @@
 
 @end
 
-@interface GameViewController () <ZGTitleSceneDelegate, GameSceneDelegate>
+@interface GameViewController () <ZGTitleSceneDelegate, GameSceneDelegate, ZGGameOverSceneDelegate>
 @end
 
 @implementation GameViewController
@@ -76,7 +76,7 @@
     return YES;
 }
 
-#pragma mark - ZGTitleSceneDelegate
+#pragma mark - ZGTitleSceneDelegate & ZGGameOverSceneDelegate
 
 -(void)didStartGameFromScene:(SKScene *)scene
 {
@@ -95,6 +95,7 @@
 {
     ZGGameOverScene *gameScene = [ZGGameOverScene sceneWithSize:self.view.bounds.size];
     gameScene.points = points;
+    gameScene.gameDelegate = self;
     SKView *view = (SKView *)self.view;
     
     [view presentScene:gameScene];

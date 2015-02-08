@@ -10,6 +10,12 @@
 
 #define kZGStartLabelName @"kZGStartLabelName"
 
+@interface ZGTitleScene ()
+
+-(void)startGame;
+
+@end
+
 @implementation ZGTitleScene
 
 -(void)didMoveToView:(SKView *)view
@@ -23,14 +29,7 @@
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    SKNode *label = [self childNodeWithName:kZGStartLabelName];
-    for (UITouch *touch in touches) {
-        CGPoint location = [touch locationInNode:self];
-        if (CGRectContainsPoint(label.frame, location)) {
-            [self startGame];
-            return;
-        }
-    }
+    [self startGame];
 }
 
 #pragma mark - Game
