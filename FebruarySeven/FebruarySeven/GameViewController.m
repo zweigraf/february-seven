@@ -8,6 +8,7 @@
 
 #import "GameViewController.h"
 #import "GameScene.h"
+#import "ZGTitleScene.h"
 
 @implementation SKScene (Unarchive)
 
@@ -28,6 +29,9 @@
 
 @end
 
+@interface GameViewController () <ZGTitleSceneDelegate>
+@end
+
 @implementation GameViewController
 
 - (void)viewDidLoad
@@ -42,7 +46,8 @@
     skView.ignoresSiblingOrder = YES;
     
     // Create and configure the scene.
-    GameScene *scene = [GameScene sceneWithSize:self.view.bounds.size];
+    ZGTitleScene *scene = [ZGTitleScene sceneWithSize:self.view.bounds.size];
+    scene.titleDelegate = self;
     scene.scaleMode = SKSceneScaleModeAspectFill;
     
     // Present the scene.
@@ -67,6 +72,18 @@
 
 - (BOOL)prefersStatusBarHidden {
     return YES;
+}
+
+#pragma mark - ZGTitleSceneDelegate
+
+-(void)didStartGameFromScene:(SKScene *)scene
+{
+    SKView * skView = (SKView *)self.view;
+    
+    GameScene *gameScene = [GameScene sceneWithSize:self.view.bounds.size];
+    gameScene.scaleMode = SKSceneScaleModeAspectFill;
+    
+    [skView presentScene:gameScene];
 }
 
 @end

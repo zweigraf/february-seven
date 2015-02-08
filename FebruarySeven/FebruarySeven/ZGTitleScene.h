@@ -8,6 +8,14 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+@protocol ZGTitleSceneDelegate <NSObject>
+
+-(void)didStartGameFromScene:(SKScene *)scene;
+
+@end
+
 @interface ZGTitleScene : SKScene
+
+@property (weak) NSObject<ZGTitleSceneDelegate> *titleDelegate;
 
 @end
