@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A56DB59A1A870E5700A12FE2 /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = A56DB5991A870E5700A12FE2 /* Assets */; };
 		A572A4F51A86E9D200EEBF54 /* ZGTitleScene.m in Sources */ = {isa = PBXBuildFile; fileRef = A572A4F41A86E9D200EEBF54 /* ZGTitleScene.m */; };
 		A572A4F81A86F28B00EEBF54 /* ZGGameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = A572A4F71A86F28B00EEBF54 /* ZGGameOverScene.m */; };
 		A5D018351A86737500E800E6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A5D018341A86737500E800E6 /* main.m */; };
@@ -30,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A56DB5991A870E5700A12FE2 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Assets; sourceTree = "<group>"; };
 		A572A4F31A86E9D200EEBF54 /* ZGTitleScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGTitleScene.h; sourceTree = "<group>"; };
 		A572A4F41A86E9D200EEBF54 /* ZGTitleScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGTitleScene.m; sourceTree = "<group>"; };
 		A572A4F61A86F28B00EEBF54 /* ZGGameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGGameOverScene.h; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 		A5D018311A86737500E800E6 /* FebruarySeven */ = {
 			isa = PBXGroup;
 			children = (
+				A56DB5991A870E5700A12FE2 /* Assets */,
 				A5D018361A86737500E800E6 /* AppDelegate.h */,
 				A5D018371A86737500E800E6 /* AppDelegate.m */,
 				A5D018391A86737500E800E6 /* GameScene.h */,
@@ -215,6 +218,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5D018481A86737500E800E6 /* LaunchScreen.xib in Resources */,
+				A56DB59A1A870E5700A12FE2 /* Assets in Resources */,
 				A5D018451A86737500E800E6 /* Images.xcassets in Resources */,
 				A5D018431A86737500E800E6 /* Main.storyboard in Resources */,
 			);

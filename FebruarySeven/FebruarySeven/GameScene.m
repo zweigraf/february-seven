@@ -25,6 +25,7 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
 };
 
 const CGFloat kZGMaxSpeed = 5;
+const CGFloat kZGObstacleRadius = 40.0;
 
 @interface GameScene () <SKPhysicsContactDelegate>
 
@@ -114,10 +115,10 @@ const CGFloat kZGMaxSpeed = 5;
 
 -(void)createSpaceship
 {
-    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
+    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"GoodGuy"];
     
-    sprite.xScale = 0.15;
-    sprite.yScale = 0.15;
+    sprite.xScale = 0.8;
+    sprite.yScale = 0.8;
     
     CGPoint position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMinY(self.frame) + sprite.size.height);
     sprite.position = position;
@@ -137,12 +138,16 @@ const CGFloat kZGMaxSpeed = 5;
 
 -(void)addObstacle
 {
-    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"Obstacle"];
+
+//    SKShapeNode *obstacle = [SKShapeNode shapeNodeWithCircleOfRadius:kZGObstacleRadius];
+    
+    
     obstacle.color = [UIColor redColor];
     obstacle.colorBlendFactor = 0.7;
     
-    obstacle.xScale = 0.2;
-    obstacle.yScale = 0.2;
+    obstacle.xScale = 1;
+    obstacle.yScale = 1;
     obstacle.speed = self.obstacleSpeed;
     obstacle.zRotation = M_PI;
     
