@@ -50,6 +50,13 @@ const CGFloat kZGObstacleRadius = 40.0;
     [self createSpaceship];
     [self createBorder];
     
+    SKAction *crash = [SKAction playSoundFileNamed:@"crash.wav" waitForCompletion:NO];
+    
+    SKAction *move = [SKAction playSoundFileNamed:@"move.wav" waitForCompletion:NO];
+    
+    SKAction *music = [SKAction repeatActionForever:[SKAction playSoundFileNamed:@"music.wav" waitForCompletion:YES]];
+    [self runAction:music];
+    
     
     self.physicsWorld.contactDelegate = self;
 }
@@ -99,6 +106,12 @@ const CGFloat kZGObstacleRadius = 40.0;
         }
         default:
             break;
+    }
+    
+    if (touchLocation != kZGTouchLocationNone) {
+        
+        SKAction *move = [SKAction playSoundFileNamed:@"move.wav" waitForCompletion:NO];
+        [self runAction:move];
     }
     
     if (_lastObstacleTime < 0) {
@@ -199,6 +212,9 @@ const CGFloat kZGObstacleRadius = 40.0;
 -(void)endGame
 {
     self.ended = YES;
+    
+    SKAction *crash = [SKAction playSoundFileNamed:@"crash.wav" waitForCompletion:NO];
+    [self runAction:crash];
     if (self.gameDelegate && [self.gameDelegate respondsToSelector:@selector(didEndGameFromScene:withPoints:)]) {
         [self.gameDelegate didEndGameFromScene:self withPoints:self.points];
     }
