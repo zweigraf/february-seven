@@ -9,6 +9,8 @@
 #import "GameScene.h"
 #import <AVFoundation/AVFoundation.h>
 
+@import CoreMotion;
+
 #define kZGSpaceshipName @"spaceship"
 #define kZGObstacleName @"obstacle"
 #define kZGBorderName @"kZGBorderName"
@@ -28,6 +30,8 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
 
 const CGFloat kZGMaxSpeed = 5;
 const CGFloat kZGObstacleRadius = 40.0;
+const CGFloat kZGMoveSpeed = 30;
+const CGFloat kZGMoveLegacyFactor = 0.05;
 
 @interface GameScene () <SKPhysicsContactDelegate>
 
@@ -35,7 +39,7 @@ const CGFloat kZGObstacleRadius = 40.0;
 @property (assign) int points;
 @property (assign) BOOL ended;
 @property (nonatomic, assign) CGFloat obstacleSpeed;
-@property (strong) NSSet *touches;
+@property (assign) double currentAcceleration;
 
 -(void)createSpaceship;
 -(void)addObstacle;
@@ -43,6 +47,7 @@ const CGFloat kZGObstacleRadius = 40.0;
 -(void)endGame;
 
 @property (strong, nonatomic) AVAudioPlayer *audioPlayer;
+@property (strong, nonatomic) CMMotionManager *motionManager;
 
 @end
 
@@ -56,12 +61,7 @@ const CGFloat kZGObstacleRadius = 40.0;
     [self createBorder];
     
     SKAction *crash = [SKAction playSoundFileNamed:@"crash.m4a" waitForCompletion:NO];
-//    [self runAction:crash];
     SKAction *move = [SKAction playSoundFileNamed:@"move_short.m4a" waitForCompletion:NO];
-//    [self
-//     runAction:move];
-//    SKAction *music = [SKAction repeatActionForever:[SKAction playSoundFileNamed:@"music.wav" waitForCompletion:YES]];
-//    [self runAction:music withKey:kZGMusicKey];
 
     NSURL *url = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/music.m4a", [[NSBundle mainBundle] resourcePath]]];
     
@@ -69,67 +69,41 @@ const CGFloat kZGObstacleRadius = 40.0;
     self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
     self.audioPlayer.numberOfLoops = -1;
     
-    if (!self.audioPlayer) {}
-//        NSLog([error localizedDescription]);
-    else {
+    if (!self.audioPlayer) {
+        NSLog(@"%@", [error localizedDescription]);
+    } else {
         [self.audioPlayer play];
     }
     
     self.physicsWorld.contactDelegate = self;
-}
-
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    /* Called when a touch begins */
-    [super touchesBegan:touches withEvent:event];
     
-    self.touches = [touches setByAddingObjectsFromSet:self.touches];
-}
-
--(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [super touchesEnded:touches withEvent:event];
-    NSMutableSet *newTouches = [NSMutableSet setWithSet:self.touches];
-    [newTouches minusSet:touches];
-    self.touches = [newTouches copy];
+    self.motionManager = [[CMMotionManager alloc] init];
+    self.motionManager.accelerometerUpdateInterval = 0.2;
+    
+    __weak GameScene *self2 = self;
+    [self.motionManager startAccelerometerUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
+        __strong GameScene *strongSelf = self2;
+        
+        strongSelf.currentAcceleration = (accelerometerData.acceleration.x * (1 - kZGMoveLegacyFactor)) + (strongSelf.currentAcceleration * kZGMoveLegacyFactor);
+    }];
 }
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
-    SKNode *ship = [self childNodeWithName:kZGSpaceshipName];
+    
+    SKSpriteNode *ship = (SKSpriteNode *)[self childNodeWithName:kZGSpaceshipName];
+    //    ship.physicsBody.velocity = CGVectorMake(self.currentAcceleration * kZGMoveSpeed, ship.physicsBody.velocity.dy);
     CGPoint position = ship.position;
     
-    ZGTouchLocation touchLocation = kZGTouchLocationNone;
-    for (UITouch *touch in self.touches) {
-        CGPoint location = [touch locationInNode:self];
-        
-        if (location.x < CGRectGetMidX(self.frame)) {
-            touchLocation = kZGTouchLocationLeft;
-            break;
-        } else if (location.x >= CGRectGetMidX(self.frame)) {
-            touchLocation = kZGTouchLocationRight;
-            break;
-        }
-    }
-    switch (touchLocation) {
-        case kZGTouchLocationLeft:
-        {
-            ship.position = CGPointMake(position.x - 5, position.y);
-            break;
-        }
-        case kZGTouchLocationRight:
-        {
-            ship.position = CGPointMake(position.x + 5, position.y);
-            break;
-        }
-        default:
-            break;
-    }
+    CGFloat halfWidth = ship.size.width / 2.0;
+    CGFloat maxX = self.size.width - halfWidth;
+    CGFloat minX = 0 + halfWidth;
+    CGFloat newX = position.x + self.currentAcceleration * kZGMoveSpeed;
+    newX = MIN(newX, maxX);
+    newX = MAX(newX, minX);
     
-    if (touchLocation != kZGTouchLocationNone) {
-        
-        SKAction *move = [SKAction playSoundFileNamed:@"move_short.m4a" waitForCompletion:NO];
-        [self runAction:move];
-    }
+    ship.position = CGPointMake(newX, position.y);
+
     
     if (_lastObstacleTime < 0) {
         _lastObstacleTime = currentTime;
@@ -140,6 +114,7 @@ const CGFloat kZGObstacleRadius = 40.0;
         self.obstacleSpeed += 0.1;
     }
 }
+
 
 #pragma mark - Game Kram
 
