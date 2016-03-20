@@ -50,7 +50,11 @@ const CGFloat kZGGameOverAgainMargin = 50.0;
     [self addChild:highNode];
     [self addChild:againNode];
     
+    SKLabelNode *titleLabel = [SKLabelNode labelNodeWithText:@"FebruarySeven"];
+    titleLabel.fontSize = 36.0;
+    titleLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(self.frame) - kZGGameOverAgainMargin * 2.0);
 
+    [self addChild:titleLabel];
 
 }
 
