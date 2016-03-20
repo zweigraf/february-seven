@@ -29,7 +29,7 @@
     titleLabel.fontSize = 36.0;
     titleLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(self.frame) - kZGLabelMargin);
     
-    SKLabelNode *creditsLabel = [SKLabelNode labelNodeWithText:@"ZweiGraf - www.zweigraf.com"];
+    SKLabelNode *creditsLabel = [SKLabelNode labelNodeWithText:@"zweigraf.com"];
     creditsLabel.fontSize = 24.0;
     creditsLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMinY(self.frame) + kZGLabelMargin / 2.0);
     
