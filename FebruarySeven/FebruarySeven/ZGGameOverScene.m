@@ -9,6 +9,7 @@
 #import "ZGGameOverScene.h"
 
 const CGFloat kZGGameOverLabelDifference = 50.0;
+const CGFloat kZGGameOverAgainMargin = 50.0;
 
 #define kZGHighScoreKey @"kZGHighScoreKey"
 
@@ -30,19 +31,27 @@ const CGFloat kZGGameOverLabelDifference = 50.0;
     SKLabelNode *node = [SKLabelNode labelNodeWithText:@"Game Over"];
     SKLabelNode *pointNode = [SKLabelNode labelNodeWithText:[NSString stringWithFormat:@"You Got %d Points", self.points]];
     SKLabelNode *highNode = [SKLabelNode labelNodeWithText:[NSString stringWithFormat:@"Best: %ld Points", (long)highscore]];
+    SKLabelNode *againNode = [SKLabelNode labelNodeWithText:@"Again?"];
     
     CGPoint center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
     CGPoint nodeLocation = CGPointMake(center.x, center.y + kZGGameOverLabelDifference);
     CGPoint pointNodeLocation = CGPointMake(center.x, center.y);
     CGPoint highLocation = CGPointMake(center.x, center.y - kZGGameOverLabelDifference);
+    CGPoint againLocation = CGPointMake(center.x, CGRectGetMinY(self.frame) + kZGGameOverAgainMargin);
+    
     
     node.position = nodeLocation;
     pointNode.position = pointNodeLocation;
     highNode.position = highLocation;
+    againNode.position = againLocation;
     
     [self addChild:node];
     [self addChild:pointNode];
     [self addChild:highNode];
+    [self addChild:againNode];
+    
+
+
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
