@@ -60,8 +60,9 @@ const CGFloat kZGMoveLegacyFactor = 0.05;
     [self createSpaceship];
     [self createBorder];
     
-    SKAction *crash = [SKAction playSoundFileNamed:@"crash.m4a" waitForCompletion:NO];
-    SKAction *move = [SKAction playSoundFileNamed:@"move_short.m4a" waitForCompletion:NO];
+    // load sound files once to cache for the game
+    [SKAction playSoundFileNamed:@"crash.m4a" waitForCompletion:NO];
+    [SKAction playSoundFileNamed:@"move_short.m4a" waitForCompletion:NO];
 
     NSURL *url = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/music.m4a", [[NSBundle mainBundle] resourcePath]]];
     
