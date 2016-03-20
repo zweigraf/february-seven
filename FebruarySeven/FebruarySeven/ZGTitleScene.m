@@ -25,7 +25,8 @@
     startLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
     startLabel.name = kZGStartLabelName;
     
-    SKNode *titleLabel = [SKLabelNode labelNodeWithText:@"FebruarySeven"];
+    SKLabelNode *titleLabel = [SKLabelNode labelNodeWithText:@"FebruarySeven"];
+    titleLabel.fontSize = 36.0;
     titleLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(self.frame) - kZGLabelMargin);
     
     SKLabelNode *creditsLabel = [SKLabelNode labelNodeWithText:@"ZweiGraf - www.zweigraf.com"];
