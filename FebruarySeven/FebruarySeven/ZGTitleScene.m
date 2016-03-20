@@ -9,6 +9,7 @@
 #import "ZGTitleScene.h"
 
 #define kZGStartLabelName @"kZGStartLabelName"
+#define kZGLabelMargin 100.0
 
 @interface ZGTitleScene ()
 
@@ -24,7 +25,16 @@
     startLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
     startLabel.name = kZGStartLabelName;
     
+    SKNode *titleLabel = [SKLabelNode labelNodeWithText:@"FebruarySeven"];
+    titleLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(self.frame) - kZGLabelMargin);
+    
+    SKLabelNode *creditsLabel = [SKLabelNode labelNodeWithText:@"ZweiGraf - www.zweigraf.com"];
+    creditsLabel.fontSize = 24.0;
+    creditsLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMinY(self.frame) + kZGLabelMargin / 2.0);
+    
     [self addChild:startLabel];
+    [self addChild:titleLabel];
+    [self addChild:creditsLabel];
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
