@@ -27,9 +27,11 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
     kZGTouchLocationRight
 };
 
-const CGFloat kZGMaxSpeed = 5;
+const CGFloat kZGMaxSpeed = 20;
 const CGFloat kZGObstacleRadius = 40.0;
 const CGFloat kZGShipBottomDistance = 100.0;
+const CGFloat kZGStartSpeed = 1.0;
+const CGFloat kZGDifficultyFactor = 1.0;
 
 @interface GameScene () <SKPhysicsContactDelegate>
 
@@ -53,7 +55,7 @@ const CGFloat kZGShipBottomDistance = 100.0;
 -(void)didMoveToView:(SKView *)view {
     
     self.lastObstacleTime = -1;
-    self.obstacleSpeed = 1.0;
+    self.obstacleSpeed = kZGStartSpeed;
     [self createSpaceship];
     [self createBorder];
     
@@ -132,7 +134,7 @@ const CGFloat kZGShipBottomDistance = 100.0;
     if (_lastObstacleTime < 0) {
         _lastObstacleTime = currentTime;
         [self addObstacle];
-    } else if ((currentTime - _lastObstacleTime) >= (1.5 - _obstacleSpeed/5)) {
+    } else if ((currentTime - _lastObstacleTime) >= (kZGDifficultyFactor - _obstacleSpeed/kZGMaxSpeed)) {
         _lastObstacleTime = currentTime;
         [self addObstacle];
         self.obstacleSpeed += 0.1;
