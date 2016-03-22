@@ -14,6 +14,7 @@
 #define kZGBorderName @"kZGBorderName"
 #define kZGMusicKey @"kZGMusicKey"
 
+
 typedef NS_OPTIONS(uint32_t, kZGCategoryBitmask) {
     kZGCategoryBitmaskSpaceship = 1 << 1,
     kZGCategoryBitmaskObstacle = 1 << 2,
@@ -28,6 +29,7 @@ typedef NS_ENUM(NSUInteger, ZGTouchLocation) {
 
 const CGFloat kZGMaxSpeed = 5;
 const CGFloat kZGObstacleRadius = 40.0;
+const CGFloat kZGShipBottomDistance = 100.0;
 
 @interface GameScene () <SKPhysicsContactDelegate>
 
@@ -146,7 +148,9 @@ const CGFloat kZGObstacleRadius = 40.0;
     sprite.xScale = 0.8;
     sprite.yScale = 0.8;
     
-    CGPoint position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMinY(self.frame) + sprite.size.height);
+    CGFloat x = CGRectGetMidX(self.frame);
+    CGFloat y = CGRectGetMinY(self.frame) + sprite.size.height + kZGShipBottomDistance;
+    CGPoint position = CGPointMake(x, y);
     sprite.position = position;
     
     sprite.name = kZGSpaceshipName;
