@@ -46,6 +46,7 @@
 //    skView.showsPhysics = YES;
     /* Sprite Kit applies additional optimizations to improve rendering performance */
     skView.ignoresSiblingOrder = YES;
+    skView.multipleTouchEnabled = YES;
     
     // Create and configure the scene.
     ZGTitleScene *scene = [ZGTitleScene sceneWithSize:self.view.bounds.size];
