@@ -266,10 +266,10 @@ const CGFloat kZGShipBottomDistance = 100.0;
     }
     if (contact.bodyA.categoryBitMask & kZGCategoryBitmaskSpaceship) {
         [contact.bodyB.node removeFromParent];
-//        [[self childNodeWithName:kZGSpaceshipName] removeFromParent];
+        [[self childNodeWithName:kZGSpaceshipName] removeFromParent];
     } else if (contact.bodyB.categoryBitMask & kZGCategoryBitmaskSpaceship) {
         [contact.bodyA.node removeFromParent];
-//        [[self childNodeWithName:kZGSpaceshipName] removeFromParent];
+        [[self childNodeWithName:kZGSpaceshipName] removeFromParent];
     }
     [self endGame];
     
