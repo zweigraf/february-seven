@@ -32,7 +32,7 @@ const CGFloat kZGObstacleRadius = 40.0;
 const CGFloat kZGShipBottomDistance = 100.0;
 const CGFloat kZGStartSpeed = 1.0;
 const CGFloat kZGDifficultyFactor = 1.0;
-const int kZGPointsPerObstacle = 10;
+const int kZGPointsPerObstacle = 1;
 
 @interface GameScene () <SKPhysicsContactDelegate>
 
