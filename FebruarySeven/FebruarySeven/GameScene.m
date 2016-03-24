@@ -32,6 +32,7 @@ const CGFloat kZGObstacleRadius = 40.0;
 const CGFloat kZGShipBottomDistance = 100.0;
 const CGFloat kZGStartSpeed = 1.0;
 const CGFloat kZGDifficultyFactor = 1.0;
+const int kZGPointsPerObstacle = 1;
 
 @interface GameScene () <SKPhysicsContactDelegate>
 
@@ -208,7 +209,7 @@ const CGFloat kZGDifficultyFactor = 1.0;
     SKAction *fly = [SKAction moveTo:destination duration:5];
 
     SKAction *seq = [SKAction sequence:@[fly, [SKAction runBlock:^{
-        self.points += 10;
+        self.points += kZGPointsPerObstacle;
     }], [SKAction removeFromParent]]];
 
     [obstacle runAction:seq];
