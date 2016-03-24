@@ -33,7 +33,7 @@ const CGFloat kZGShipBottomDistance = 100.0;
 const CGFloat kZGStartSpeed = 1.0;
 const CGFloat kZGDifficultyFactor = 1.0;
 const int kZGPointsPerObstacle = 1;
-const CGFloat kZGShipXSpeed = 5.0;
+const CGFloat kZGShipXSpeed = 7.5;
 
 @interface GameScene () <SKPhysicsContactDelegate>
 
