@@ -33,6 +33,7 @@ const CGFloat kZGShipBottomDistance = 100.0;
 const CGFloat kZGStartSpeed = 1.0;
 const CGFloat kZGDifficultyFactor = 1.0;
 const int kZGPointsPerObstacle = 1;
+const CGFloat kZGShipXSpeed = 5.0;
 
 @interface GameScene () <SKPhysicsContactDelegate>
 
@@ -114,12 +115,12 @@ const int kZGPointsPerObstacle = 1;
     switch (touchLocation) {
         case kZGTouchLocationLeft:
         {
-            ship.position = CGPointMake(position.x - 5, position.y);
+            ship.position = CGPointMake(position.x - kZGShipXSpeed, position.y);
             break;
         }
         case kZGTouchLocationRight:
         {
-            ship.position = CGPointMake(position.x + 5, position.y);
+            ship.position = CGPointMake(position.x + kZGShipXSpeed, position.y);
             break;
         }
         default:
