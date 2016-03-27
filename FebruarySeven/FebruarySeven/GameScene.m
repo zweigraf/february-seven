@@ -12,6 +12,7 @@
 #define kZGSpaceshipName @"spaceship"
 #define kZGObstacleName @"obstacle"
 #define kZGBorderName @"kZGBorderName"
+#define kZGPointLabelName @"kZGPointLabelName"
 #define kZGMusicKey @"kZGMusicKey"
 
 
@@ -34,6 +35,8 @@ const CGFloat kZGStartSpeed = 1.0;
 const CGFloat kZGDifficultyFactor = 1.0;
 const int kZGPointsPerObstacle = 1;
 const CGFloat kZGShipXSpeed = 7.5;
+const CGFloat kZGPointLabelMarginTop = 10.0;
+const CGFloat kZGPointLabelMarginLeft = 20.0;
 
 @interface GameScene () <SKPhysicsContactDelegate>
 
@@ -46,6 +49,7 @@ const CGFloat kZGShipXSpeed = 7.5;
 -(void)createSpaceship;
 -(void)addObstacle;
 -(void)createBorder;
+-(void)createPointLabel;
 -(void)endGame;
 
 @property (strong, nonatomic) AVAudioPlayer *audioPlayer;
@@ -60,6 +64,7 @@ const CGFloat kZGShipXSpeed = 7.5;
     self.obstacleSpeed = kZGStartSpeed;
     [self createSpaceship];
     [self createBorder];
+    [self createPointLabel];
     
     // load sound files once to cache for the game
     [SKAction playSoundFileNamed:@"crash.m4a" waitForCompletion:NO];
@@ -211,12 +216,36 @@ const CGFloat kZGShipXSpeed = 7.5;
 
     SKAction *seq = [SKAction sequence:@[fly, [SKAction runBlock:^{
         self.points += kZGPointsPerObstacle;
+        [self updatePointLabelWithPoints:self.points];
     }], [SKAction removeFromParent]]];
 
     [obstacle runAction:seq];
 
     
     [self addChild:obstacle];
+}
+
+-(void)createPointLabel {
+    SKLabelNode *label = [SKLabelNode labelNodeWithText:@"0"];
+    label.name = kZGPointLabelName;
+
+    [self addChild:label];
+    
+    [self updatePointLabelWithPoints:0];
+}
+
+-(void)updatePointLabelWithPoints:(int)points {
+    SKLabelNode *node = (SKLabelNode *)[self childNodeWithName:kZGPointLabelName];
+    node.text = [NSString stringWithFormat:@"%d", points];
+    
+    CGSize nodeSize = node.frame.size;
+    // label origin is bottom left, whole height needs to be subtracted for top margin
+    CGFloat topMargin = kZGPointLabelMarginTop + nodeSize.height;
+    // label origin is bottom left, left margin therefore only needs half
+    CGFloat leftMargin = kZGPointLabelMarginLeft + nodeSize.width / 2.0;
+    CGPoint topLeft = CGPointMake(CGRectGetMinX(self.frame) + leftMargin, CGRectGetMaxY(self.frame) - topMargin);
+    
+    node.position = topLeft;
 }
 
 -(void)createBorder {
