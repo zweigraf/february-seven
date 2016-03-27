@@ -12,6 +12,7 @@
 #define kZGSpaceshipName @"spaceship"
 #define kZGObstacleName @"obstacle"
 #define kZGBorderName @"kZGBorderName"
+#define kZGPointLabelName @"kZGPointLabelName"
 #define kZGMusicKey @"kZGMusicKey"
 
 
@@ -34,6 +35,7 @@ const CGFloat kZGStartSpeed = 1.0;
 const CGFloat kZGDifficultyFactor = 1.0;
 const int kZGPointsPerObstacle = 1;
 const CGFloat kZGShipXSpeed = 7.5;
+const CGFloat kZGPointLabelMargin = 20.0;
 
 @interface GameScene () <SKPhysicsContactDelegate>
 
@@ -46,6 +48,7 @@ const CGFloat kZGShipXSpeed = 7.5;
 -(void)createSpaceship;
 -(void)addObstacle;
 -(void)createBorder;
+-(void)createPointLabel;
 -(void)endGame;
 
 @property (strong, nonatomic) AVAudioPlayer *audioPlayer;
@@ -60,6 +63,7 @@ const CGFloat kZGShipXSpeed = 7.5;
     self.obstacleSpeed = kZGStartSpeed;
     [self createSpaceship];
     [self createBorder];
+    [self createPointLabel];
     
     // load sound files once to cache for the game
     [SKAction playSoundFileNamed:@"crash.m4a" waitForCompletion:NO];
@@ -217,6 +221,27 @@ const CGFloat kZGShipXSpeed = 7.5;
 
     
     [self addChild:obstacle];
+}
+
+-(void)createPointLabel {
+    SKLabelNode *label = [SKLabelNode labelNodeWithText:@"0"];
+    label.name = kZGPointLabelName;
+
+    [self addChild:label];
+    
+    [self updatePointLabelWithPoints:0];
+}
+
+-(void)updatePointLabelWithPoints:(int)points {
+    SKLabelNode *node = (SKLabelNode *)[self childNodeWithName:kZGPointLabelName];
+    node.text = [NSString stringWithFormat:@"%d", points];
+    
+    CGSize nodeSize = node.frame.size;
+    CGFloat leftMargin = kZGPointLabelMargin + nodeSize.width / 2.0;
+    CGFloat topMargin = kZGPointLabelMargin + nodeSize.height / 2.0;
+    CGPoint topLeft = CGPointMake(CGRectGetMinX(self.frame) + leftMargin, CGRectGetMaxY(self.frame) - topMargin);
+    
+    node.position = topLeft;
 }
 
 -(void)createBorder {
