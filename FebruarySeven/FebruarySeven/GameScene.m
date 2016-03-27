@@ -215,6 +215,7 @@ const CGFloat kZGPointLabelMargin = 20.0;
 
     SKAction *seq = [SKAction sequence:@[fly, [SKAction runBlock:^{
         self.points += kZGPointsPerObstacle;
+        [self updatePointLabelWithPoints:self.points];
     }], [SKAction removeFromParent]]];
 
     [obstacle runAction:seq];
