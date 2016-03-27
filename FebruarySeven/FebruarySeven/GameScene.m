@@ -35,7 +35,8 @@ const CGFloat kZGStartSpeed = 1.0;
 const CGFloat kZGDifficultyFactor = 1.0;
 const int kZGPointsPerObstacle = 1;
 const CGFloat kZGShipXSpeed = 7.5;
-const CGFloat kZGPointLabelMargin = 20.0;
+const CGFloat kZGPointLabelMarginTop = 10.0;
+const CGFloat kZGPointLabelMarginLeft = 20.0;
 
 @interface GameScene () <SKPhysicsContactDelegate>
 
@@ -238,8 +239,10 @@ const CGFloat kZGPointLabelMargin = 20.0;
     node.text = [NSString stringWithFormat:@"%d", points];
     
     CGSize nodeSize = node.frame.size;
-    CGFloat leftMargin = kZGPointLabelMargin + nodeSize.width / 2.0;
-    CGFloat topMargin = kZGPointLabelMargin + nodeSize.height / 2.0;
+    // label origin is bottom left, whole height needs to be subtracted for top margin
+    CGFloat topMargin = kZGPointLabelMarginTop + nodeSize.height;
+    // label origin is bottom left, left margin therefore only needs half
+    CGFloat leftMargin = kZGPointLabelMarginLeft + nodeSize.width / 2.0;
     CGPoint topLeft = CGPointMake(CGRectGetMinX(self.frame) + leftMargin, CGRectGetMaxY(self.frame) - topMargin);
     
     node.position = topLeft;
