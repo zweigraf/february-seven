@@ -26,3 +26,16 @@ Assets/* is CC0.
 ## Installation
 
 You can install the latest release from the app store: https://appsto.re/de/0r9tbb.i
+
+## Changelog
+
+### 1.1 (2)
+
+- decreased points per obstacle to 1.
+- increased ship size. more is always better.
+- points are now displayed live while playing.
+- version number is now displayed on the start screen. 
+
+### 1.0 (1)
+
+First public release.
