@@ -14,6 +14,7 @@
 @interface ZGTitleScene ()
 
 -(void)startGame;
++(NSString *)versionString;
 
 @end
 
@@ -50,6 +51,19 @@
     if (self.titleDelegate && [self.titleDelegate respondsToSelector:@selector(didStartGameFromScene:)]) {
         [self.titleDelegate didStartGameFromScene:self];
     }
+}
+
+#pragma mark - Utility
+
++(NSString *)versionString
+{
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString *versionShort = infoDict[@"CFBundleShortVersionString"];
+    NSString *versionBuild = infoDict[@"CFBundleVersion"];
+    
+    NSString *versionString = [NSString stringWithFormat:@"%@ (%@)", versionShort, versionBuild];
+
+    return versionString;
 }
 
 @end
