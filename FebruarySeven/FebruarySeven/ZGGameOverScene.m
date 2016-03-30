@@ -11,7 +11,7 @@
 const CGFloat kZGGameOverLabelDifference = 50.0;
 const CGFloat kZGGameOverAgainMargin = 50.0;
 
-#define kZGHighScoreKey @"kZGHighScoreKey"
+#define kZGHighScoreKey @"kZGHighScoreV2Key"
 
 @interface ZGGameOverScene ()
 
