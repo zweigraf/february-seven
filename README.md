@@ -32,7 +32,7 @@ You can install the latest release from the app store: https://appsto.re/de/0r9t
 ### 1.1 (2)
 
 - decreased points per obstacle to 1.
-- increased ship size. more is always better.
+- increased ship speed. more is always better.
 - points are now displayed live while playing.
 - version number is now displayed on the start screen. 
 
