@@ -22,3 +22,7 @@ Fun little iOS game I started on February 7, 2015 and launched in March 2016.
 
 Code is MIT.
 Assets/* is CC0. 
+
+## Installation
+
+You can install the latest release from the app store: https://appsto.re/de/0r9tbb.i
