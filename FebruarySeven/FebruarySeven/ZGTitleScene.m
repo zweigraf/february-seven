@@ -30,8 +30,9 @@
     titleLabel.fontSize = 36.0;
     titleLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMaxY(self.frame) - kZGLabelMargin);
     
-    SKLabelNode *creditsLabel = [SKLabelNode labelNodeWithText:@"zweigraf.com"];
-    creditsLabel.fontSize = 24.0;
+    NSString *creditsString = [NSString stringWithFormat:@"zweigraf.com - Version %@", [ZGTitleScene versionString]];
+    SKLabelNode *creditsLabel = [SKLabelNode labelNodeWithText:creditsString];
+    creditsLabel.fontSize = 18.0;
     creditsLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMinY(self.frame) + kZGLabelMargin / 2.0);
     
     [self addChild:startLabel];
