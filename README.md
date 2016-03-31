@@ -31,7 +31,7 @@ You can install the latest release from the app store: https://appsto.re/de/0r9t
 
 ### 1.1 (2)
 
-- decreased points per obstacle to 1. also resetted all highscores.
+- decreased points per obstacle to 1. also reset all highscores.
 - increased ship speed. more is always better.
 - points are now displayed live while playing.
 - version number is now displayed on the start screen. 
